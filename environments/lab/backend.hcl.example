@@ -1,0 +1,6 @@
+# State bucket from bootstrap/ in aws-secure-three-tier-platform.
+bucket       = "tfstate-<ACCOUNT_ID>-us-east-2"
+key          = "aws-azure-hybrid-network/lab/terraform.tfstate"
+region       = "us-east-2"
+encrypt      = true
+use_lockfile = true

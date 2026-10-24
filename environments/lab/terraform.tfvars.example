@@ -1,0 +1,11 @@
+# Copy to terraform.tfvars (git-ignored).
+# AWS credentials: your SSO profile. Azure credentials: `az login`.
+
+azure_subscription_id = "00000000-0000-0000-0000-000000000000"
+
+# Contents of your SSH public key (the .pub file, never the private key).
+ssh_public_key = "ssh-ed25519 AAAA... you@laptop"
+
+alert_email = "you@example.com"
+
+# Defaults: AWS us-east-2, Azure eastus, company block 172.16.32.0/19
