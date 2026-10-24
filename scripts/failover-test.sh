@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2016  # $c inside single quotes is a jq variable, not shell
 #
 # failover-test.sh - prove the second tunnel takes over when the first fails.
 #
