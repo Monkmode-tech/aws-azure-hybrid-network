@@ -54,6 +54,9 @@ check() {
   fi
 }
 
+# Indent command output under its check line in the report.
+indent() { while IFS= read -r line; do printf '      %s\n' "$line"; done; }
+
 # Run a shell command on the AWS VM through SSM and print its output.
 aws_vm_run() {
   local params cmd_id status
@@ -127,7 +130,7 @@ check "Azure: route to $AWS_CIDR learned via eBGP" azure_learned_aws_route
 aws_to_azure() {
   local out
   out="$(aws_vm_run "ping -c 3 -W 2 $AZ_IP && curl -s --max-time 5 http://$AZ_IP/")"
-  echo "$out" | sed 's/^/      /'
+  indent <<<"$out"
   grep -q "hello from Azure" <<<"$out"
 }
 check "AWS VM -> Azure VM over the tunnel (ping + HTTP)" aws_to_azure
@@ -135,7 +138,7 @@ check "AWS VM -> Azure VM over the tunnel (ping + HTTP)" aws_to_azure
 azure_to_aws() {
   local out
   out="$(azure_vm_run "curl -s --max-time 5 http://$AWS_IP/")"
-  echo "$out" | sed 's/^/      /'
+  indent <<<"$out"
   grep -q "hello from AWS" <<<"$out"
 }
 check "Azure VM -> AWS VM over the tunnel (HTTP)" azure_to_aws
@@ -168,7 +171,7 @@ private_path_capture() {
   aws ssm send-command --instance-ids "$AWS_VM" --document-name AWS-RunShellScript \
     --parameters "$params" >/dev/null
   out="$(azure_vm_run "sudo timeout 30 tcpdump -n -i eth0 -c 6 icmp 2>/dev/null")"
-  echo "$out" | sed 's/^/      /'
+  indent <<<"$out"
   grep -q "IP $AWS_IP > $AZ_IP: ICMP echo request" <<<"$out"
 }
 check "Packet capture on Azure shows AWS private source IP $AWS_IP" private_path_capture

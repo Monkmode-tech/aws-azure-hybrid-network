@@ -58,4 +58,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - run: shellcheck scripts/*.sh
+      - name: shellcheck (findings become PR annotations)
+        run: |
+          shellcheck -f json1 scripts/*.sh > shellcheck.json || true
+          jq -r '.comments[] | "::error file=\(.file),line=\(.line),col=\(.column)::SC\(.code) (\(.level)) \(.message)"' shellcheck.json
+          [ "$(jq '.comments | length' shellcheck.json)" -eq 0 ]
