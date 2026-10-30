@@ -8,7 +8,7 @@ terraform {
     }
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 4.0"
+      version = "~> 5.10"
     }
     random = {
       source  = "hashicorp/random"
@@ -37,4 +37,8 @@ provider "aws" {
 provider "azurerm" {
   features {}
   subscription_id = var.azure_subscription_id
+
+  # azurerm 5.x no longer registers resource providers automatically. Register
+  # exactly the two this lab uses, so a brand-new subscription deploys cleanly.
+  resource_providers_to_register = ["Microsoft.Compute", "Microsoft.Network"]
 }
