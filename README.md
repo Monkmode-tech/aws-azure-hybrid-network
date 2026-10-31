@@ -140,7 +140,7 @@ terraform destroy                              # always, after the session
 
 ## Background
 
-Built by **Caleb Tetteh** (M.S. Cloud Computing Systems, UMGC; B.S. Computer
+Built by **Caleb Tetteh** (M.S. Cloud Computing, UMGC; B.S. Computer
 Science, Georgia Tech). It brings together CLCS 635 *Networking Engineering for
 Cloud Computing* (subnet design, IGW/NAT/route tables, connectivity testing,
 Wireshark analysis) and the hybrid AWS + Azure governance challenge from the
